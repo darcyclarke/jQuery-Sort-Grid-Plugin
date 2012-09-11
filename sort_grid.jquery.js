@@ -12,7 +12,7 @@ jQuery.fn.sortGrid = function(selector, speed, callback){
 	speed =	(typeof(speed) != "number") ? 1000 : speed;
 	callback = (typeof(callback) != "function") ? function(){} : callback;
 	return this.each(function(){
-		var element = $(this), el = element.children(), p = { "height": element.height(), "width": element.width(), "top": (parseFloat(element.css('borderTopWidth')) + parseFloat(element.css('padding-top'))) + 'px', "left": 0 }, box;
+		var element = $(this), el = element.children(), p = { "height": element.height(), "width": element.width(), "top": (parseFloat(element.css('borderTopWidth')) + parseFloat(element.css('padding-top'))), "left": 0 }, box;
 		for(var i=(el.length-1);i>=0;i--){
 			box = el.eq(i);
 			box.css({ "position":"absolute", "top": box.position().top + "px", "left": box.position().left + "px" });
@@ -27,7 +27,6 @@ jQuery.fn.sortGrid = function(selector, speed, callback){
 			for(var i=0;i<=el.length;i++){
 				var box = el.eq(i);
 				if(box.hasClass(selector)){
-					element.stop(true, false).animate({"height": ((parseFloat(top)-parseFloat(p.top)) + box.outerHeight(true)) +"px"}, speed);
 					if((left + box.outerWidth(true)) >= (p.width + p.left)){
 						top = parseFloat(top) + parseFloat(box.outerHeight(true));
 						box.stop(true, false).show().animate({ "top": + top + "px", "left": p.left + "px" }, speed);
@@ -36,6 +35,7 @@ jQuery.fn.sortGrid = function(selector, speed, callback){
 						box.stop(true, false).show().animate({ "top": + top + "px", "left": left + "px" }, speed);
 						left = left + box.outerWidth(true);	
 					}
+					element.stop(true, false).animate({"height": ((parseFloat(top)-parseFloat(p.top)) + box.outerHeight(true)) +"px"}, speed);
 				} else {
 					box.stop(true, false).hide();	
 				}
